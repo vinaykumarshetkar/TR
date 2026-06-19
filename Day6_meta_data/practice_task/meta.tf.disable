@@ -1,0 +1,24 @@
+resource "local_file" "file4" {
+  filename = "abc.txt"
+  content  = "this is my fisrt resource"
+}
+resource "local_file" "file11" {
+  filename = "abc1.txt"
+  content  = "this is my fisrt resource"
+}
+
+resource "local_file" "file21" {
+  filename   = "xyz12.txt"
+  content    = "this is my fisrt resource"
+  depends_on = [local_file.file11]
+}
+
+resource "local_file" "file31" {
+  filename = "a12312.txt"
+  content  = local_file.file4.id
+}
+resource "local_file" "file41" {
+  filename   = "a125412.txt"
+  content    = "this is my fisrt resource"
+  depends_on = [local_file.file21, local_file.file31]
+}

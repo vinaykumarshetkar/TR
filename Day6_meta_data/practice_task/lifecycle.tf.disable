@@ -1,0 +1,12 @@
+resource local_file file1 {
+    filename = "abc.txt"
+    content  = "this is my first resource, adding lifecycle block to this resource"  
+}
+
+resource local_file file2 {
+    filename = "xyz.txt"
+    content  = "this is my second resource"
+    lifecycle {
+        replace_triggered_by = [local_file.file1]
+    }  
+}
