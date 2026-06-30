@@ -1,0 +1,35 @@
+resource "random_bytes" "random_bytes" {
+  length = 16
+}
+
+resource "random_id" "random_id" {
+  byte_length = 8
+}
+
+resource "random_integer" "random_integer" {
+  min = 1
+  max = 100
+}
+
+resource "random_password" "random_password" {
+  length  = 16
+  special = true
+}
+
+resource "random_pet" "random_pet" {
+  length    = 2
+  separator = "-"
+}
+
+resource "random_shuffle" "random_shuffle" {
+  input = ["apple", "banana", "cherry", "date", "elderberry"]
+}
+
+resource "random_string" "random_string" {
+  length  = 16
+  special = true
+}
+
+resource "random_uuid" "random_uuid" {
+}
+

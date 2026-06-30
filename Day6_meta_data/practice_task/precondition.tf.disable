@@ -1,0 +1,20 @@
+resource "local_file" "name" {
+  filename = var.filename
+  content = var.content
+  lifecycle {
+    precondition {
+      condition     = length(var.content) > 0
+      error_message = "Content cannot be empty."
+    }
+  }
+}
+
+variable "filename" {
+  description = "The name of the file to be created."
+  type        = string
+  default     = "example.txt"
+}
+variable "content" {
+  description = "The content to be written to the file."
+  type        = string
+}

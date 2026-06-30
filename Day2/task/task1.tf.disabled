@@ -1,0 +1,4 @@
+resource "local_file" "resource_1" {
+  filename = "1.txt"
+  content  = "hello, world"
+}
