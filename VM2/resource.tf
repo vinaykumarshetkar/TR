@@ -2,33 +2,38 @@ terraform {
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "4.77.0"
+      version = "~> 4.77"
     }
   }
-}
 
+backend "azurerm" {
+    resource_group_name  = "tfstate-rg"
+    storage_account_name = "tfstatevinay001"
+    container_name       = "tfstate"
+    key                  = "terraform.tfstate"
+      use_azuread_auth     = true
+  }
+}
 provider "azurerm" {
   features {}
 }
 
-resource "azurerm_resource_group" "testRG" {
-  name     = var.RGname
-  location = var.RGlocation
+data "azurerm_resource_group" "testRG" {
+  name     = "testRG"
 }
 
-resource ""
-variable "RGname" {
-  default = "test"
+data "azurerm_virtual_network" "testVnet" {
+  name                = "testVnet"
+  resource_group_name = data.azurerm_resource_group.testRG.name
+}
+data "azurerm_subnet" "subnet1" {
+  name                 = "subnet1"
+  resource_group_name  = data.azurerm_resource_group.testRG.name
+  virtual_network_name = data.azurerm_virtual_network.testVnet.name
+
+}
+data "azurerm_network_interface" "testNIC" {
+  name                = "testNIC"
+  resource_group_name = data.azurerm_resource_group.testRG.name
 }
 
-variable "RGlocation" {
-  default = "West US"
-}
-
-output "testRG" {
-value= {
-id =azurerm_resource_group.testRG.id
-location= azurerm_resource_group.testRG.location
-  value = azurerm_resource_group.testRG.name
-}
-}
